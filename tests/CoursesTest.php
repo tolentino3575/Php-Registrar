@@ -107,6 +107,47 @@ class CoursesTest extends PHPUnit_Framework_TestCase{
       $this->assertEquals([$test_course_name, $test_course_name2], $result);
   }
 
+  function testFind()
+  {
+      //Arrange
+      $course_name = "Php";
+      $course_number = '100';
+      $id = 1;
+      $test_course = new Courses($id, $course_name, $course_number);
+      $test_course->save();
+
+      //Act
+      $result = Courses::find($test_course->getId());
+
+      //Assert
+      $this->assertEquals($test_course, $result);
+  }
+
+  function testDeleteCourse()
+  {
+      //Arrange
+      $course_name = "Php";
+      $course_number = '100';
+      $id = 1;
+      $test_course = new Courses($id, $course_name, $course_number);
+      $test_course->save();
+
+      $course_name2 = "Java";
+      $course_number2 = '100';
+      $id = 1;
+      $test_course2 = new Courses($id, $course_name2, $course_number2);
+      $test_course2->save();
+
+      //Act
+      $test_course2->delete();
+      $result = Courses::getAll();
+
+      //Assert
+      $this->assertEquals([$test_course], $result);
+
+  }
+
+
 
 }
 ?>
