@@ -23,7 +23,8 @@ class StudentTest  extends PHPUnit_Framework_TestCase{
     //Arrange
     $name = "Bob";
     $enroll_date= 01012016;
-    $test_name = new Name($name, $enroll_date);
+    $id = 3;
+    $test_name = new Student($id, $name, $enroll_date);
 
     //Act
     $result = $test_name->getName();
@@ -31,6 +32,37 @@ class StudentTest  extends PHPUnit_Framework_TestCase{
     //Assert
     $this->assertEquals($name, $result);
 
+  }
+
+  function testGetId()
+  {
+    //Arrange
+    $name = "Bob";
+    $enroll_date = 01012016;
+    $id = 1;
+    $test_id = new Student($id, $name, $enroll_date);
+
+    //Act
+    $result = $test_id->getId();
+
+    //Assert
+    $this->assertEquals($id, $result);
+
+  }
+
+  function testEnrollDate()
+  {
+    //Arrange
+    $name = "Tiff";
+    $enroll_date = 01012016;
+    $id = 4;
+    $test_student = new Student($id, $name, $enroll_date);
+
+    //Act
+    $result = $test_student->getEnrollDate();
+
+    //Assert
+    $this->assertEquals($enroll_date, $result);
   }
 
 
