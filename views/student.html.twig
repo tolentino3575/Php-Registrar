@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="/css/bootstrap-theme.min.css" type="text/css">
+        <link rel="stylesheet" href="/css/styles.css" type="text/css">
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <strong>{{ students.getName }}</strong>
+        {% if courses is not empty %}
+            {% for course in courses %}
+                <ul>
+                    <li>{{ course.getCourseName }}</li>
+                    <li>{{ course.getCourseNumber }}</li>
+                </ul>
+            {% endfor %}
+        {% endif %}
+
+        <form action="/add_to_student" method="post">
+            <input id="student_id" name="student_id" type="hidden" value="{{ students.getId }}">
+
+            <label for="course_id">Select a Course</label>
+            <select id="course_id" name="course_id" type="text">
+                {% for course in all_courses %}
+                <option value="{{ course.getId }}"> {{ course.getCourseName }}</option>
+                {% endfor %}
+            </select>
+            <button class="btn btn-danger" type="submit">Add Course</button>
+        </form>
+
+        <a href="/">Home</a>
+    </body>
+</html>

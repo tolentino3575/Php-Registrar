@@ -40,7 +40,19 @@
     });
 
     $app->get("/students", function() use ($app){
-        return $app['twig']->render('students.html.twig');
+        return $app['twig']->render('students.html.twig', array('students' => Student::getAll()));
+    });
+
+    $app->get("/student/{id}", function($id) use ($app){
+        $students = Student::find($id);
+        return $app['twig']->render('student.html.twig', array('courses' => $students->getCourses(), 'students' => $students, 'all_courses' => Courses::getAll()));
+    });
+
+    $app->post("/add_to_student", function() use ($app){
+        $course = Courses::find($_POST['course_id']);
+        $student = Student::find($_POST['student_id']);
+        $student->addCourse($course);
+        return $app['twig']->render('student.html.twig', array('students' => $student, 'all_courses' => Courses::getAll(), 'courses' => $student->getCourses()));
     });
 
     $app->post("/add_student", function() use ($app){
