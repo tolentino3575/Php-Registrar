@@ -6,6 +6,7 @@
 */
 
 require_once "src/Courses.php";
+require_once "src/Student.php";
 
 $server = 'mysql:host=localhost;dbname=registrar_test';
 $username = 'root';
@@ -147,7 +148,60 @@ class CoursesTest extends PHPUnit_Framework_TestCase{
 
   }
 
+  function testAddStudent()
+  {
+      //Arrange
+      $name = "Timmy";
+      $enroll_date = 01012016;
+      $id = 5;
+      $test_student = new Student($id, $name, $enroll_date);
+      $test_student->save();
 
+      $course_name = "C#";
+      $course_number = '110';
+      $id = 1;
+      $test_course = new Courses($id, $course_name, $course_number);
+      $test_course->save();
+
+      //Act
+      $test_course->addStudent($test_student);
+      $result = $test_course->getStudents();
+
+      //Assert
+      $this->assertEquals([$test_student], $result);
+
+  }
+
+  function testGetStudents()
+  {
+      //Arrange
+      $name = "Timmy";
+      $enroll_date = 01012016;
+      $id = 1;
+      $test_student = new Student($id, $name, $enroll_date);
+      $test_student->save();
+
+      $name2 = "Jimmy";
+      $enroll_date2 = 04052016;
+      $id2 = 1;
+      $test_student2 = new Student($id2, $name2, $enroll_date2);
+      $test_student2->save();
+
+      $course_name = "Php";
+      $course_number = '100';
+      $id2 = 1;
+      $test_course = new Courses($id2, $course_name, $course_number);
+      $test_course->save();
+
+
+      //Act
+      $test_course->addStudent($test_student);
+      $test_course->addStudent($test_student2);
+
+      //Assert
+      $this->assertEquals($test_course->getStudents(), [$test_student, $test_student2]);
+
+  }
 
 }
 ?>

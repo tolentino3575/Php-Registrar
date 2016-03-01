@@ -84,6 +84,30 @@ class Courses {
     {
         $GLOBALS['DB']->exec("DELETE FROM courses");
     }
+
+    function addStudent($student)
+    {
+        $GLOBALS['DB']->exec("INSERT INTO student_courses (student_id, course_id) VALUES ({$student->getId()}, {$this->getId()});");
+    }
+
+    function getStudents()
+    {
+        $students = $GLOBALS['DB']->query("SELECT student.* FROM courses
+            JOIN student_courses ON (courses.id = student_courses.course_id)
+            JOIN student ON (student_courses.student_id = student.id)
+            WHERE courses.id = {$this->getId()};");
+
+        $result_students = array();
+        foreach($students as $student)
+        {
+            $student_id = $student['id'];
+            $student_name = $student['name'];
+            $student_enroll = $student['enroll_date'];
+            $new_student = new Student($student_id, $student_name, $student_enroll);
+            array_push($result_students, $new_student);
+        }
+        return $result_students;
+    }
 }
 
 ?>
