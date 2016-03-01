@@ -79,8 +79,7 @@ class StudentTest extends PHPUnit_Framework_TestCase{
 
     //Act
     $result = Student::getAll();
-    var_dump($result[0]);
-    var_dump($test_student);
+
 
     //Assert
     $this->assertEquals($test_student, $result[0]);
@@ -110,24 +109,47 @@ class StudentTest extends PHPUnit_Framework_TestCase{
 
   }
 
-  // function testFind()
-  // {
-  //     //Arrange
-  //     $name = "Pete";
-  //     $enroll_date = 01012016;
-  //     $id = 4;
-  //     $test_student = new Student($id, $name, $enroll_date);
-  //     $test_student->save();
-  //
-  //     //Act
-  //     $result = Student::find($test_student->getId());
-  //     var_dump($test_student->getId());
-  //
-  //     //Assert
-  //     $this->assertEquals($test_student, $result);
-  //
-  //
-  // }
+  function testFind()
+  {
+      //Arrange
+      $name = "Pete";
+      $enroll_date = 01012016;
+      $id = 4;
+      $test_student = new Student($id, $name, $enroll_date);
+      $test_student->save();
+
+      //Act
+      $result = Student::find($test_student->getId());
+
+      //Assert
+      $this->assertEquals($test_student, $result);
+
+
+  }
+
+  function testDeleteStudent()
+  {
+      //Arrange
+      $name = "Pete";
+      $enroll_date = 01012016;
+      $id = 4;
+      $test_student = new Student($id, $name, $enroll_date);
+      $test_student->save();
+
+      $name2 = "Ted";
+      $enroll_date2 = 03032016;
+      $id = 4;
+      $test_student2 = new Student($id, $name2, $enroll_date2);
+      $test_student2->save();
+
+      //Act
+      $test_student->delete();
+      $result = Student::getAll();
+
+      //Assert
+      $this->assertEquals([$test_student2], $result);
+
+  }
 
 
 

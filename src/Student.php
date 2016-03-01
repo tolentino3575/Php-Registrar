@@ -65,21 +65,26 @@ class Student {
         $GLOBALS['DB']->exec("DELETE FROM student");
     }
 
-    // function find($search_id)
-    // {
-    //     $found_student = null;
-    //     $students = Student::getAll();
-    //
-    //     foreach($students as $student)
-    //     {
-    //         $student_id = $student->getId();
-    //         if ($student_id == $search_id)
-    //         {
-    //             $found_student = $student;
-    //         }
-    //     }
-    //     return $found_student;
-    // }
+    static function find($search_id)
+    {
+        $found_student = null;
+        $students = Student::getAll();
+
+        foreach($students as $student)
+        {
+            $student_id = $student->getId();
+            if ($student_id == $search_id)
+            {
+                $found_student = $student;
+            }
+        }
+        return $found_student;
+    }
+
+    function delete()
+    {
+        $GLOBALS['DB']->exec("DELETE FROM student WHERE id = {$this->getId()};");
+    }
 
 
 } ?>
