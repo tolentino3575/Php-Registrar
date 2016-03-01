@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="/css/bootstrap-theme.min.css" type="text/css">
+        <link rel="stylesheet" href="/css/styles.css" type="text/css">
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <form action="/add_student" method="post">
+            <label for="student_name">Student Name</label>
+            <input id="student_name" name="student_name">
+
+            <label for="enroll_date">Student Enroll Date</label>
+            <input id="enroll_date" name="enroll_date">
+
+            <button type="submit" class="btn btn-danger">Add</button>
+        </form>
+        {% if students is not empty %}
+            {% for student in students %}
+                <ul>
+                    <li>{{ student.getName}}</li>
+                    <li>{{ student.getEnrollDate }}</li>
+                </ul>
+            {% endfor %}
+        {% endif %}
+
+        <form action="/delete_all_students" method="post">
+        <button type="submit" class="btn btn-info">Delete All</button>
+        </form>
+
+        <a href="/">Home</a>
+    </body>
+</html>
