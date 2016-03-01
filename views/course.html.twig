@@ -30,6 +30,10 @@
             <button class="btn btn-danger" type="submit">Add Student</button>
         </form>
 
+        <form action="/course/{{ courses.getId }}" method="post">
+              <input name="_method" type="hidden" value="delete">
+            <button class="btn btn-info" type="submit">Delete course</button>
+        </form>
         <a href="/">Home</a>
     </body>
 </html>

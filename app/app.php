@@ -64,11 +64,23 @@
         return $app['twig']->render('students.html.twig', array('students' => Student::getAll()));
     });
 
+    $app->delete("/student/{id}", function($id) use ($app){
+        $student = Student::find($id);
+        $student->delete();
+        return $app['twig']->render('students.html.twig', array('students'=>Student::getAll()));
+    });
+
     $app->post("/add_to_course", function() use ($app){
         $course = Courses::find($_POST['course_id']);
         $student = Student::find($_POST['student_id']);
         $course->addStudent($student);
         return $app['twig']->render('course.html.twig', array('courses' => $course, 'all_courses' => Courses::getAll(), 'students' => $course->getStudents(), 'all_students' => Student::getAll()));
+    });
+
+    $app->delete("/course/{id}", function($id) use ($app){
+        $course = Courses::find($id);
+        $course->delete();
+        return $app['twig']->render('courses.html.twig', array('courses' => Courses::getAll()));
     });
 
     $app->post("/delete_all_students", function() use ($app){
@@ -80,6 +92,7 @@
         $courses = Courses::find($id);
         return $app['twig']->render('course.html.twig', array('students' => $courses->getStudents(), 'courses' => $courses, 'all_students' => Student::getAll()));
     });
+
 
 
     return $app;
