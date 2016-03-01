@@ -14,9 +14,12 @@ $DB = new PDO($server, $username, $password);
 
 
 
-class StudentTest  extends PHPUnit_Framework_TestCase{
+class StudentTest extends PHPUnit_Framework_TestCase{
 
-  // deleteAll
+  protected function tearDown()
+     {
+       Student::deleteAll();
+     }
 
 
   function testGetName() {
@@ -55,7 +58,7 @@ class StudentTest  extends PHPUnit_Framework_TestCase{
     //Arrange
     $name = "Tiff";
     $enroll_date = 01012016;
-    $id = 4;
+    $id = null;
     $test_student = new Student($id, $name, $enroll_date);
 
     //Act
@@ -64,6 +67,68 @@ class StudentTest  extends PHPUnit_Framework_TestCase{
     //Assert
     $this->assertEquals($enroll_date, $result);
   }
+
+  function testSave()
+  {
+    //Arrange
+    $id = null;
+    $name = "Tiff";
+    $enroll_date = 01012016;
+    $test_student = new Student($id, $name, $enroll_date);
+    $test_student->save();
+
+    //Act
+    $result = Student::getAll();
+    var_dump($result[0]);
+    var_dump($test_student);
+
+    //Assert
+    $this->assertEquals($test_student, $result[0]);
+
+  }
+
+  function testGetAll()
+  {
+    //Arrange
+    $name = "Pete";
+    $enroll_date = 01012016;
+    $id = null;
+    $test_student = new Student($id, $name, $enroll_date);
+    $test_student->save();
+
+    $name2 = "Nic";
+    $enroll_date2 = 01012016;
+    $id = null;
+    $test_student2 = new Student($id, $name2, $enroll_date2);
+    $test_student2->save();
+
+    //Act
+    $result = Student::getAll();
+
+    //Assert
+    $this->assertEquals([$test_student, $test_student2], $result);
+
+  }
+
+  // function testFind()
+  // {
+  //     //Arrange
+  //     $name = "Pete";
+  //     $enroll_date = 01012016;
+  //     $id = 4;
+  //     $test_student = new Student($id, $name, $enroll_date);
+  //     $test_student->save();
+  //
+  //     //Act
+  //     $result = Student::find($test_student->getId());
+  //     var_dump($test_student->getId());
+  //
+  //     //Assert
+  //     $this->assertEquals($test_student, $result);
+  //
+  //
+  // }
+
 
 
 }
