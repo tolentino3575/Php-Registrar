@@ -203,5 +203,23 @@ class CoursesTest extends PHPUnit_Framework_TestCase{
 
   }
 
+  function testUpdate()
+  {
+      $course_name = "Php";
+      $course_number = '100';
+      $id2 = 1;
+      $test_course = new Courses($id2, $course_name, $course_number);
+      $test_course->save();
+
+      $new_name = "Python";
+      $test_course->update($new_name);
+
+      //Act
+      $result = $test_course->getCourseName();
+
+      //Assert
+      $this->assertEquals($new_name, $result);
+  }
+
 }
 ?>
