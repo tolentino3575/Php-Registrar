@@ -8,7 +8,7 @@
         <title></title>
     </head>
     <body>
-        <strong>{{ courses.getCourseName}}</strong>
+        <strong>{{ courses.getCourseName}}</strong><a href="/course/{{ courses.getId }}/edit"> Edit</a>
         {% if students is not empty %}
             {% for student in students %}
                 <ul>
