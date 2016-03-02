@@ -14,6 +14,7 @@
     $password = 'root';
     $DB = new PDO($server, $username, $password);
 
+    $app['debug']= true;
     $app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path'=>__DIR__."/../views"
     ));
 
@@ -43,10 +44,7 @@
         return $app['twig']->render('students.html.twig', array('students' => Student::getAll()));
     });
 
-    $app->get("/student/{id}", function($id) use ($app){
-        $students = Student::find($id);
-        return $app['twig']->render('student.html.twig', array('courses' => $students->getCourses(), 'students' => $students, 'all_courses' => Courses::getAll()));
-    });
+
 
     $app->post("/add_to_student", function() use ($app){
         $course = Courses::find($_POST['course_id']);
@@ -88,10 +86,29 @@
         return $app['twig']->render('students.html.twig', array('students' => Student::getAll()));
     });
 
+    $app->get("/student/{id}/edit", function($id) use ($app) {
+        $student = Student::find($id);
+        return $app['twig']->render('edit_student.html.twig', array('student' => $student));
+    });
+
+    $app->get("/student/{id}", function($id) use ($app){
+        $students = Student::find($id);
+        return $app['twig']->render('student.html.twig', array('courses' => $students->getCourses(), 'students' => $students, 'all_courses' => Courses::getAll()));
+    });
+
+    $app->patch("/student/{id}", function($id) use ($app) {
+        $new_name = $_POST['new_name'];
+        $student = Student::find($id);
+        $student->update($new_name);
+        return $app['twig']->render('student.html.twig', array('courses' => $student->getCourses(), 'students' => $student, 'all_courses' => Courses::getAll()));
+    });
+
+
     $app->get("/course/{id}", function($id) use ($app) {
         $courses = Courses::find($id);
         return $app['twig']->render('course.html.twig', array('students' => $courses->getStudents(), 'courses' => $courses, 'all_students' => Student::getAll()));
     });
+
 
 
 
