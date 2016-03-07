@@ -91,6 +91,7 @@ class Student {
 //     {
 //         $query = $GLOBALS['DB']->query("SELECT course_id FROM student_courses WHERE student_id = {$this->getId()};");
 //         [4, 2, 5, 6]
+
 //         $course_ids = $query->fetchAll(PDO::FETCH_ASSOC);
 //         ["course_id":4, "course_id":2, "course_id":5, "course_id":6]
 //
@@ -101,8 +102,10 @@ class Student {
 //             $course_id = $id['course_id'];
 //             $result = $GLOBALS['DB']->query("SELECT * FROM courses WHERE id = {$course_id};");
 //             [["math", 110, 1], ["science", 101, 4]]
+
 //             $returned_course = $result->fetchAll(PDO::FETCH_ASSOC);
 //             [["course_name":"math", "course_number":110, "id":1], ["course_name":"science", "course_number":101, "id":4]]
+
 //             $course_name = $returned_course[0]['course_name'];
 //             $course_number = $returned_course[0]['course_number'];
 //             $id = $returned_course[0]['id'];
